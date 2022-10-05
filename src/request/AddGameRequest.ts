@@ -1,8 +1,3 @@
-import { IsString, Length } from "class-validator"
+import { GameRequest } from "./GameRequest";
 
-export class AddGameRequest {
-
-  @IsString()
-  @Length(1, 20)
-  name!: string;
-}
+export class AddGameRequest extends GameRequest {}

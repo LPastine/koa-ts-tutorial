@@ -6,7 +6,7 @@ describe('storage/redis', () => {
 
     it('should initially return an empty list', async () => {
       expect(
-        await redisStorage.get('my_test_list_1')
+        await redisStorage().get('my_test_list_1')
       ).toEqual(
         []
       )
@@ -20,18 +20,18 @@ describe('storage/redis', () => {
 
     it('should allow adding an entry to the list', async () => {
       expect(
-        await redisStorage.add(list_name, "chris")
+        await redisStorage().add(list_name, "chris")
       ).toEqual(
         true
       );
 
       expect(
-        await redisStorage.get(list_name)
+        await redisStorage().get(list_name)
       ).toEqual(
         [ "chris" ]
       );
 
-      await redisStorage.remove(list_name, "chris");
+      await redisStorage().remove(list_name, "chris");
     });
 
   });
@@ -41,22 +41,22 @@ describe('storage/redis', () => {
 
       const list_name = 'my_test_list_3';
 
-      await redisStorage.add(list_name, "chris");
-      await redisStorage.add(list_name, "paul");
+      await redisStorage().add(list_name, "chris");
+      await redisStorage().add(list_name, "paul");
 
       expect(
-        await redisStorage.remove(list_name, "paul")
+        await redisStorage().remove(list_name, "paul")
       ).toEqual(
         true
       );
 
       expect(
-        await redisStorage.get(list_name)
+        await redisStorage().get(list_name)
       ).toEqual(
         [ "chris" ]
       );
 
-      await redisStorage.remove(list_name, "chris");
+      await redisStorage().remove(list_name, "chris");
     });
 
   });

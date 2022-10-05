@@ -12,14 +12,22 @@ export function redisStorage(): Interfaces.IStorage {
   const lrange = promisify(client.lrange).bind(client);
 
   return {
-    get: (list: string) => {
-      return lrange(list, 0, -1).then((val: any) => val).catch((e: any) => []);
+    get: (list: string): Promise<string[]> => {
+      return lrange(list, 0, -1)
+      .then((val: string[]) => val)
+      .catch((e: Error) => []);
     },
-    add: (list: string, name: string) => {
-      return rpush(list, name).then((val: any) => val > 0).catch((e: any) => false);
+    add: (list: string, name: string): Promise<boolean> => {
+      return rpush(list, name)
+      .then((val: number) => val > 0)
+      .catch((e: Error) => false);
     },
-    remove: (list: string, name: string) => {
-      return lrem(list, 0, name).then((val: any) => val > 0).catch((e: any) => false);
+    remove: (list: string, name: string): Promise<boolean> => {
+      return lrem(list, 0, name)
+      .then((val: number) => val > 0)
+      .catch((e: Error) => false);
     }
   }
 };
+
+export default redisStorage
